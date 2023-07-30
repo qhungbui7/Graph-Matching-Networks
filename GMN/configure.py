@@ -56,7 +56,7 @@ def get_default_config():
             batch_size=20,
             learning_rate=1e-4,
             mode='pair',
-            loss='margin',  # other: hamming
+            loss='hamming',  # other: hamming
             margin=1.0,
             # A small regularizer on the graph vector scales to avoid the graph
             # vectors blowing up.  If numerical issues is particularly bad in the
