@@ -3,14 +3,14 @@ def get_default_config():
     model_type = 'matching'
     # Set to `embedding` to use the graph embedding net.
     node_state_dim = 32
-    edge_state_dim = 16
-    graph_rep_dim = 128
+    edge_state_dim = 16 # DEFAULT SETTING
+    graph_rep_dim = 128 # DEFAULT SETTING
     graph_embedding_net_config = dict(
         node_state_dim=node_state_dim,
         edge_state_dim=edge_state_dim,
         edge_hidden_sizes=[node_state_dim * 2, node_state_dim * 2],
         node_hidden_sizes=[node_state_dim * 2],
-        n_prop_layers=5,
+        n_prop_layers=5, # CHANGE THIS
         # set to False to not share parameters across message passing layers
         share_prop_params=True,
         # initialize message MLP with small parameter weights to prevent
@@ -18,7 +18,7 @@ def get_default_config():
         # e.g. layer normalization to keep the scale of these under control.
         edge_net_init_scale=0.1,
         # other types of update like `mlp` and `residual` can also be used here. gru
-        node_update_type='gru',
+        node_update_type='gru', # TRY MANY DIFFERENT RANGE ACCORDING
         # set to False if your graph already contains edges in both directions.
         use_reverse_direction=True,
         # set to True if your graph is directed
@@ -28,7 +28,7 @@ def get_default_config():
         # set to `embedding` to use the graph embedding net.
         prop_type=model_type)
     graph_matching_net_config = graph_embedding_net_config.copy()
-    graph_matching_net_config['similarity'] = 'dotproduct'  # other: euclidean, cosine
+    graph_matching_net_config['similarity'] = 'cosine'  # other: euclidean, cosine # CHANGE TO THIS
     return dict(
         encoder=dict(
             node_hidden_sizes=[node_state_dim],
@@ -47,8 +47,8 @@ def get_default_config():
             problem='graph_edit_distance',
             dataset_params=dict(
                 # always generate graphs with 20 nodes and p_edge=0.2.
-                n_nodes_range=[20, 20],
-                p_edge_range=[0.2, 0.2],
+                n_nodes_range=[20, 20], # TRY MANY DIFFERENT RANGE 
+                p_edge_range=[0.2, 0.2], # TRY MANY DIFFERENT RANGE 
                 n_changes_positive=1,
                 n_changes_negative=2,
                 validation_dataset_size=1000)),
@@ -56,7 +56,7 @@ def get_default_config():
             batch_size=20,
             learning_rate=1e-4,
             mode='pair',
-            loss='hamming',  # other: hamming
+            loss='hamming',  # other: hamming # CHANGE TO THIS
             margin=1.0,
             # A small regularizer on the graph vector scales to avoid the graph
             # vectors blowing up.  If numerical issues is particularly bad in the
